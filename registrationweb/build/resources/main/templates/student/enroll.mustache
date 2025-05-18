@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>석현대학교 - 수강 신청</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<!-- 상단 네비게이션 -->
+<header class="site-header">
+    <div class="container header-container">
+        <div class="left-header">
+            <div class="logo">석현대학교</div>
+            <div class="system-name">수강신청시스템</div>
+        </div>
+        <div class="user-menu">
+            <span class="user-info">{{student.name}}님 환영합니다</span>
+            <a href="/logout" class="logout-btn">로그아웃</a>
+        </div>
+    </div>
+</header>
+
+<!-- 메인 콘텐츠 -->
+<div class="main-content container">
+    <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 class="page-title">수강 신청</h1>
+        <div>
+            <a href="/student/courses" class="btn btn-primary">수강 내역 보기</a>
+            <a href="/student" class="btn" style="background-color: #555; color: white;">학생 메인으로</a>
+        </div>
+    </div>
+
+    {{#successMessage}}
+        <div class="alert alert-success" style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+            {{successMessage}}
+        </div>
+    {{/successMessage}}
+
+    {{#errorMessage}}
+        <div class="alert alert-danger" style="background-color: #f2dede; color: #a94442; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+            {{errorMessage}}
+        </div>
+    {{/errorMessage}}
+
+    <table>
+        <thead>
+        <tr>
+            <th>과목명</th>
+            <th>담당교수</th>
+            <th>요일</th>
+            <th>시간</th>
+            <th>강의실</th>
+            <th>신청</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#timetables}}
+            <tr>
+                <td>{{subjectName}}</td>
+                <td>{{professorName}}</td>
+                <td>{{day}}</td>
+                <td>{{startTime}} - {{endTime}}</td>
+                <td>{{room}}</td>
+                <td>
+                    <form method="post" action="/student/enroll">
+                        <input type="hidden" name="timetableId" value="{{id}}">
+                        <button type="submit" class="btn btn-primary">수강 신청</button>
+                    </form>
+                </td>
+            </tr>
+        {{/timetables}}
+        {{^timetables}}
+            <tr>
+                <td colspan="6" style="text-align: center;">수강 가능한 과목이 없습니다.</td>
+            </tr>
+        {{/timetables}}
+        </tbody>
+    </table>
+</div>
+
+<!-- 푸터 이미지 -->
+<footer class="site-footer">
+    <img src="/images/footer.png" alt="석현대학교 푸터">
+</footer>
+</body>
+</html>
